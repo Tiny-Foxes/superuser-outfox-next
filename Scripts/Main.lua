@@ -536,4 +536,8 @@ end
 
 
 -- This is a table for various globals thrown around in the theme.
-_SUPERUSER = {}
+_SUPERUSER = {
+	GetShaders = function()
+		return LoadModule('Theme.Shaders.lua')()
+	end
+}
