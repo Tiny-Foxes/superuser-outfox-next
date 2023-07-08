@@ -5,6 +5,7 @@ local game = GAMESTATE:GetCurrentGame():GetName()
 local game_remap = {
 	['be-mu'] = 'bm',
 	['po-mu'] = 'popn',
+	['groove'] = 'dance',
 }
 
 local function compare(a, b)

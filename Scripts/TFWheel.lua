@@ -49,6 +49,7 @@ TF_WHEEL.StyleDB = {
 -- If you have AutoStyle, this might be beneficial since it only lists the game mode name.
 TF_WHEEL.QuickStyleDB = {
 	dance = 'single',
+	groove = 'single',
 	pump = 'single',
 	smx = 'single',
 	techno = 'single4',
