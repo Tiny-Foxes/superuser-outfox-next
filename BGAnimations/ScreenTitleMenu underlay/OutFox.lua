@@ -80,6 +80,8 @@ local uiText = SuperActor.new('ActorFrame')
 local uiPoweredBy = SuperActor.new('BitmapText')
 -- UI Theme Title
 local uiTitle = SuperActor.new('Sprite')
+-- UI A5 Flair
+local uiFlair = SuperActor.new('BitmapText')
 -- UI Tagline
 local uiTagline = SuperActor.new('BitmapText')
 -- UI Creator Text

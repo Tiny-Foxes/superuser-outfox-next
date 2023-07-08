@@ -982,8 +982,8 @@ do songPreview
 				self:stoptweening():sleep(song:GetSampleLength()):queuecommand('SongPreview')
 			end
 		else
-			--GAMESTATE:GetCurrentSong():PlayPreviewMusic() -- Doesn't fade out.
-			---[[
+			GAMESTATE:GetCurrentSong():PlayPreviewMusic() -- Doesn't fade out.
+			--[[
 			local song = GAMESTATE:GetCurrentSong()
 			SOUND:PlayMusicPart(
 				song:GetPreviewMusicPath(),
