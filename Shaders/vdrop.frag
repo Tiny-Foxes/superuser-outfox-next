@@ -4,7 +4,7 @@
 
 varying vec2 textureCoord;
 uniform vec2 textureSize;
-uniform float time;
+uniform float realtime;
 
 vec3 iMouse = vec3(0.0);
 
@@ -32,9 +32,9 @@ void main()
 	p = vec2(atan(p.x, p.y) / PI, 2.5 / d);
     if (iMouse.z>0.5)
     	p.y *= 0.5;
-    float t =  time*0.4;
-    vec3 col = vec3(1.55,0.65,.225) * vDrop(p,t);	// red
-    col += vec3(0.55,0.75,1.225) * vDrop(p,t+0.33);	// blue
-    col += vec3(0.45,1.15,0.425) * vDrop(p,t+0.66);	// green
+    float t =  realtime*0.4;
+    vec3 col = vec3(1.0) * vDrop(p,t);	// red
+    col += vec3(1.0) * vDrop(p,t+0.33);	// blue
+    col += vec3(1.0) * vDrop(p,t+0.66);	// green
 	gl_FragColor = vec4(col*(d*d), col);
 }

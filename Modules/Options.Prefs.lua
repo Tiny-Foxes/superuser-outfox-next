@@ -383,10 +383,10 @@ return {
 		LoadFunction = function(self,list,pn)
 			if GAMESTATE:IsHumanPlayer(pn) then
 				local po = GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred")
-				if po:AvarageScrollBPM() > 0 then list[2] = true return
+				if po:AverageScrollBPM() > 0 then list[2] = true return
 					elseif po:MaxScrollBPM() > 0 then list[3] = true return
 					elseif po:TimeSpacing() > 0 then list[4] = true return
-					elseif po:ConstAverageScrollBPM() > 0 then list[5] = true return
+					elseif po:CAverageScrollBPM() > 0 then list[5] = true return
 					elseif po:AverageVelocityBPM() > 0 then list[6] = true return
 					else list[1] = true return
 				end

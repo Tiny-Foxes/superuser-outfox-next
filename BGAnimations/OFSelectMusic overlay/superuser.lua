@@ -1,3 +1,9 @@
+--[[
+	NOTES:
+	-	Add favorites
+	-	Add options select subscreen
+--]]
+
 -- Redirect input to Lua.
 for plr in ivalues(PlayerNumber) do
 	SCREENMAN:set_input_redirected(plr, true)

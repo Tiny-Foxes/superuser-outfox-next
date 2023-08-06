@@ -28,6 +28,7 @@ local af = Def.ActorFrame {
 		self:queuemessage('Setup')
 	end,
 	SetupMessageCommand = function(self)
+		self:xy(-SCREEN_CENTER_X, -SCREEN_CENTER_Y) -- players will center themselves
 		song = GAMESTATE:GetCurrentSong()
 		songpos = GAMESTATE:GetSongPosition()
 		if not song then return end
@@ -43,7 +44,7 @@ local af = Def.ActorFrame {
 			local nd = song:GetNoteData(chart[i])
 			nf.chart[i] = nd
 		end
-		self:luaeffect('CheckMusicLoop')
+		--self:luaeffect('CheckMusicLoop')
 	end,
 	CurrentSongChangedMessageCommand = function(self)
 		song = GAMESTATE:GetCurrentSong()
@@ -55,10 +56,10 @@ local af = Def.ActorFrame {
 		local target = sample_end - songpos:GetMusicSeconds()
 		local dt = self:GetEffectDelta()
 
-		if target >= (0.5 - dt * 2) and target <= (0.5 + dt * 2) then
+		if target >= (0.5 - dt * 3) and target <= (0.5 + dt * 3) then
 			MESSAGEMAN:Broadcast('MusicLoopNearEnd')
 		end
-		if target >= (song:GetSampleLength() - dt * 2) and target <= (song:GetSampleLength() + dt * 2) then
+		if target >= (song:GetSampleLength() - dt * 3) and target <= (song:GetSampleLength() + dt * 3) then
 			MESSAGEMAN:Broadcast('MusicLoopEnd')
 		end
 	end,
@@ -97,7 +98,7 @@ local plrs = Def.ActorFrame {
 		self:luaeffect('UpdateEffects')
 	end,
 	UpdateEffectsCommand = function(self)
-		ArrowEffects.Update()
+		ArrowEffectsDirect:Update()
 	end,
 }
 
@@ -105,7 +106,7 @@ aft[#aft + 1] = plrs
 
 ---[[
 for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
-	local plrpop = GAMESTATE:GetPlayerState(v):GetPlayerOptions('ModsLevel_Preferred')
+	--local plrpop = GAMESTATE:GetPlayerState(v):GetPlayerOptions('ModsLevel_Preferred')
 	plrs[#plrs + 1] = Def.ActorFrame {
 		Name = 'Player'..ToEnumShortString(v),
 		FOV = 45,
@@ -247,6 +248,7 @@ af[#af + 1] = Def.Sprite {
 		--self:queuecommand('SetPreviewColor')
 	end,
 	CurrentSongChangedMessageCommand = function(self)
+		self:stoptweening():diffusealpha(0):glow(0, 0, 0, 0)
 		--self:queuecommand('SetPreviewColor')
 	end,
 	SetPreviewColorCommand = function(self)
@@ -261,9 +263,6 @@ af[#af + 1] = Def.Sprite {
 			:sleep(0.25)
 			:easeinoutcircle(1)
 			:diffuse(0.5 + red, 1 - red, 0.5, 1)
-	end,
-	CurrentSongChangedMessageCommand = function(self)
-		self:stoptweening():diffusealpha(0):glow(0, 0, 0, 0)
 	end,
 	MusicLoopNearEndMessageCommand = function(self)
 		self:stoptweening():diffusealpha(1):easeinoutcircle(0.25):diffusealpha(0):glow(0, 0, 0, 0)

@@ -4,7 +4,7 @@ local scale = sh / 480
 
 local ThemeColor = LoadModule('Theme.Colors.lua')
 
-local ast = Def.ActorScreenTexture {}
+local shader_time = 0
 
 return Def.ActorFrame {
 	-- Starfield
@@ -17,17 +17,17 @@ return Def.ActorFrame {
 		end,
 	},
 	Def.Quad {
+		Frag = _SUPERUSER.GetShaders().vdrop,
 		InitCommand = function(self)
 			self:FullScreen():blend('BlendMode_Add')
-		end,
-		OnCommand = function(self)
-			self:luaeffect('Update')
+			self:sleep(self:GetEffectDelta()):queuecommand('Update')
+			--self:GetShader():compilebg()
 		end,
 		UpdateCommand = function(self)
-			self:aux(self:getaux() + self:GetEffectDelta())
-			self:GetShader():uniform1f('realtime', self:getaux())
+			shader_time = shader_time + self:GetEffectDelta()
+			self:GetShader():uniform1f('realtime', shader_time)
+			self:sleep(self:GetEffectDelta()):queuecommand('Update')
 		end,
-		Frag = _SUPERUSER.GetShaders().vdrop,
 	},
 	-- Tint
 	Def.Quad {
