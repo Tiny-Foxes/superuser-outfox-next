@@ -35,7 +35,7 @@ if GAMESTATE:IsHumanPlayer(p) then
 			local plr = SCREENMAN:GetTopScreen():GetChild('Player'..ToEnumShortString(p))
 			self:xy(plr:GetX()+pane_x_position+(p:find('P1') and -5 or 5),(SCREEN_CENTER_Y+backupy)-10)
 			:horizalign(pane_align):SetSize(120, SCREEN_HEIGHT * 0.75):skewy(p:find('P1') and 0.5 or -0.5):valign(0)
-			if (IsGame('dance') or IsGame('pump')) then
+			if (IsGame('dance') or IsGame('groove') or IsGame('pump')) then
 				local c = tonumber(LoadModule('Config.Load.lua')('ScreenFilterColor', PROFILEMAN:GetProfileDir(0)..'/OutFoxPrefs.ini'))
 				local colors = {
 					{

@@ -1,5 +1,13 @@
 if GAMESTATE:IsCourseMode() then return Def.Actor {} end
 
+local game = GAMESTATE:GetCurrentGame():GetName()
+
+local game_remap = {
+	['be-mu'] = 'bm',
+	['po-mu'] = 'popn',
+	['groove'] = 'dance',
+}
+
 return Def.ActorFrame {
 	Name = 'GroupInfoFrame',
 	InitCommand = function(self)
@@ -100,13 +108,13 @@ return Def.ActorFrame {
 
 			for i = 1, #sgroup do
 				for _, c in ipairs(sgroup[i]:GetAllSteps()) do
-					if c:GetStepsType():lower():find(GAMESTATE:GetCurrentGame():GetName()) then
+					if c:GetStepsType():lower():find(game_remap[game] or game) then
 						numcharts = numcharts + 1
 					end
 				end
 			end
 
-			self:stoptweening():settext(GAMESTATE:GetCurrentGame():GetName().." CHARTS IN GROUP: "..numcharts)
+			self:stoptweening():settext(game.." CHARTS IN GROUP: "..numcharts)
 		end,
 	},
 	Def.BitmapText {

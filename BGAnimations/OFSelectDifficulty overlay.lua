@@ -69,7 +69,10 @@ end
 
 
 local af = SuperActor.new('ActorFrame')
-local diffPreview = LoadActor(THEME:GetPathG('Players', 'preview'))
+local diffPreview = SuperActor.new('ActorFrame')
+diffPreview:SetCommand('On', function(self)
+	self:AddChild(loadfile(THEME:GetPathG('Players', 'preview')))
+end)
 af:AddChild(diffPreview, 'DiffPreview')
 
 for k in pairs(plrs) do

@@ -75,6 +75,9 @@ local aft = Def.ActorFrameTexture {
 			:EnablePreserveTexture(false)
 			:Create()
 	end,
+	OnCommand = function(self)
+		self:queuemessage('Setup')
+	end,
 }
 
 af[#af + 1] = aft
@@ -98,7 +101,9 @@ local plrs = Def.ActorFrame {
 		self:luaeffect('UpdateEffects')
 	end,
 	UpdateEffectsCommand = function(self)
-		ArrowEffectsDirect:Update()
+		if ArrowEffectsDirect then
+			ArrowEffectsDirect:Update()
+		end
 	end,
 }
 
@@ -169,7 +174,7 @@ for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 				poptions[speedmod](poptions, params.speed)
 			end
 		end,
-		UpdateModsCommand = function(self, param)
+		UpdateModsCommand = function(self, params)
 			if not SCREENMAN:GetTopScreen().GetGoToOptions then return end
 			if getenv('NewOptions') ~= 'Effects' then return end
 			local scr = SCREENMAN:GetTopScreen()
@@ -248,7 +253,7 @@ af[#af + 1] = Def.Sprite {
 		--self:queuecommand('SetPreviewColor')
 	end,
 	CurrentSongChangedMessageCommand = function(self)
-		self:stoptweening():diffusealpha(0):glow(0, 0, 0, 0)
+		--self:stoptweening():diffusealpha(0):glow(0, 0, 0, 0)
 		--self:queuecommand('SetPreviewColor')
 	end,
 	SetPreviewColorCommand = function(self)

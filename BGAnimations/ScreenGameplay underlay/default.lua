@@ -122,7 +122,7 @@ return Def.ActorFrame {
 			OnCommand = function(self)
 				local plr = SCREENMAN:GetTopScreen():GetChild('PlayerP1')
 				self:visible(false)
-				if ((IsGame('dance') or IsGame('pump')) and plr) then
+				if ((IsGame('dance') or IsGame('groove') or IsGame('pump')) and plr) then
 					self
 						:visible(true)
 						:xy(plr:GetX(), SCREEN_CENTER_Y)
@@ -166,11 +166,11 @@ return Def.ActorFrame {
 			OnCommand = function(self)
 				local plr = SCREENMAN:GetTopScreen():GetChild('PlayerP2')
 				self:visible(false)
-				if ((IsGame('dance') or IsGame('pump')) and plr) then
+				if ((IsGame('dance') or IsGame('groove') or IsGame('pump')) and plr) then
 					self
 						:visible(true)
 						:xy(plr:GetX(), SCREEN_CENTER_Y)
-						:SetSize(GAMESTATE:GetCurrentStyle():GetWidth(PLAYER_1) * plr:GetZoom(), SCREEN_HEIGHT)
+						:SetSize(GAMESTATE:GetCurrentStyle():GetWidth(PLAYER_2) * plr:GetZoom(), SCREEN_HEIGHT)
 					local c = tonumber(LoadModule('Config.Load.lua')('ScreenFilterColor', PROFILEMAN:GetProfileDir(1)..'/OutFoxPrefs.ini'))
 					local colors = {
 						{
