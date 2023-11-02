@@ -67,7 +67,6 @@ local function MoveDifficulty(self, offset, Diffs)
 end
 
 
-
 local af = SuperActor.new('ActorFrame')
 local diffPreview = SuperActor.new('ActorFrame')
 diffPreview:SetCommand('On', function(self)

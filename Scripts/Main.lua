@@ -534,6 +534,10 @@ function Actor:JudgmentAnims(judgment, plr)
 	return anims[judgment]
 end
 
+local path = THEME:GetCurrentThemeDirectory()..'Other/songlist.json'
+if not File.Read(path) then
+	File.Write(path, '')
+end
 
 -- This is a table for various globals thrown around in the theme.
 _SUPERUSER = {

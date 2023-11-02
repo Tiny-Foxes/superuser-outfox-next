@@ -4,6 +4,7 @@
 
 varying vec2 textureCoord;
 uniform vec2 textureSize;
+uniform vec2 resolution;
 uniform float realtime;
 
 vec3 iMouse = vec3(0.0);

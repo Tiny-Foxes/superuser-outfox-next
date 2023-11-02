@@ -553,6 +553,7 @@ do songWheel
 			for plr in ivalues(PlayerNumber) do
 				SCREENMAN:set_input_redirected(plr, false)
 			end
+			File.Write(THEME:GetPathO('', 'songlist.json'), JsonEncode(GAMESTATE:Env().AllSongs))
 			SCREENMAN:GetTopScreen():Cancel()
 		elseif PlayersJoined[self.pn] then
 			MESSAGEMAN:Broadcast('GroupUnselect')

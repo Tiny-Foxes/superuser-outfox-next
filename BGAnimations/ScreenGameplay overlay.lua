@@ -24,9 +24,8 @@ return Def.ActorFrame {
 				:visible(false)
 		end,
 		OnCommand = function(self)
-			local tutorial = SCREENMAN:GetTopScreen():GetName():lower():find('tutorial') and true or false
 			self
-				:visible(tutorial and GAMESTATE:IsSideJoined(PLAYER_1))
+				:visible(GAMESTATE:IsSideJoined(PLAYER_1))
 				:sleep(0.25)
 				:easeoutexpo(0.5)
 				:addx(256)
@@ -84,9 +83,8 @@ return Def.ActorFrame {
 				:visible(false)
 		end,
 		OnCommand = function(self)
-			local tutorial = SCREENMAN:GetTopScreen():GetName():lower():find('tutorial') and true or false
 			self
-				:visible(tutorial and GAMESTATE:IsSideJoined(PLAYER_2))
+				:visible(GAMESTATE:IsSideJoined(PLAYER_2))
 				:sleep(0.25)
 				:easeoutexpo(0.75)
 				:addx(-256)

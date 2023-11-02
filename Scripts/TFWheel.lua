@@ -169,7 +169,7 @@ end
 -- We use this so we can do ButtonCommand.
 -- Example: MenuLeftCommand=function(self) end.
 
--- Extra keybinds other than the game buttons. The key queues a command called value.
+-- Extra keybinds other than the game buttons. The key queues a command given by a string.
 TF_WHEEL.Keybinds = {
 	backslash = {'Search', PlayerNumber[1]},
 }
@@ -200,12 +200,14 @@ local subtext = {
 	'Now let me see you dance.',
 	'Play NUCLEAR-STAR from MRC2. Now.',
 	'GET THAT UPSCORE BOIIIIIIIIIII',
-	'And also select an XMod probably',
+	'And also a speed mod probably',
 	'Not Drugs',
 	'And it BETTER not be Popstars by K/DA.',
-	'hey check out https://sudospective.net'
+	'hey check out https://sudospective.net',
+	'and none of that squeaky piss trap',
 }
 
 function TF_WHEEL.RandomSubText()
+	--return subtext[#subtext]
 	return subtext[math.random(1, #subtext)]
 end
