@@ -205,6 +205,9 @@ local subtext = {
 	'And it BETTER not be Popstars by K/DA.',
 	'hey check out https://sudospective.net',
 	'and none of that squeaky piss trap',
+	'it better not suck',
+	'youre really picking for the chart though',
+	'You deserve this moment. You EARNED this moment.',
 }
 
 function TF_WHEEL.RandomSubText()
