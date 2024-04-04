@@ -16,7 +16,7 @@ float vDrop(vec2 uv,float t)
     uv.x = floor(uv.x);
     uv.y *= 0.05;							// stretch
     float o=sin(uv.x*215.4);				// offset
-    float s=cos(uv.x*33.1)*.3 +.7;			// speed
+    float s=cos(uv.x*33.1)*.3 +.2;			// speed
     float trail = mix(95.0,35.0,s);			// trail length
     float yv = fract(uv.y + t*s + o) * trail;
     yv = 1.0/yv;
@@ -37,5 +37,5 @@ void main()
     vec3 col = vec3(1.0) * vDrop(p,t);	// red
     col += vec3(1.0) * vDrop(p,t+0.33);	// blue
     col += vec3(1.0) * vDrop(p,t+0.66);	// green
-	gl_FragColor = vec4(col*(d*d), col);
+	gl_FragColor = vec4(col*(d*d) , col * 0.5);
 }

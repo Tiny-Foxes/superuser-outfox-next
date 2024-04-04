@@ -44,6 +44,18 @@ return Def.ActorFrame {
 				:diffusealpha(0.25)
 		end,
 	},
+	Def.AudioVisualizer {
+		Name = 'MusicAV',
+		UpdateRate = 0.01,
+		Amount = 128,
+		LinearPeaks = true,
+		PeakHeight = SCREEN_HEIGHT * 0.25,
+		UseQuads = true,
+		CalcSoundLevel = true,
+		InitCommand = function(self)
+			self:Center():y(SCREEN_HEIGHT * 0.825):basezoom(1.1):diffusealpha(0.1):fadetop(1):fadebottom(1)
+		end,
+	},
 	Def.ActorFrame {
 		Name = 'BannerFrame',
 		InitCommand = function(self)

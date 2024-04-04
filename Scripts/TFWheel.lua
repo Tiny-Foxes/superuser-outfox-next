@@ -69,6 +69,27 @@ TF_WHEEL.QuickStyleDB = {
 	kickbox = 'human'
 }
 
+TF_WHEEL.GameDB = {
+	'dance',
+	'groove',
+	'pump',
+	'smx',
+	'techno',
+	'be-mu',
+	'po-mu',
+	'gddm',
+	'guitar',
+	'gh',
+	'taiko',
+	'para',
+	'kbx',
+	'ez2',
+	'ds3ddx',
+	'maniax',
+	'stepstage',
+	'kickbox',
+}
+
 TF_WHEEL.MPath = THEME:GetCurrentThemeDirectory().."Modules/"
 
 function Actor:ForParent(Amount)
@@ -165,15 +186,16 @@ function TF_WHEEL.CountingNumbers(self,NumStart,NumEnd,Duration,format)
 	self:sleep(Duration/10):queuecommand("Count")
 end
 
+-- Extra keybinds other than the game buttons. The key queues a command given by a string.
+TF_WHEEL.Keybinds = {
+	q = {'Sort', PlayerNumber[1]},
+	backslash = {'Search', PlayerNumber[1]},
+	y = {'Favorite', PlayerNumber[1]},
+}
+
 -- Main Input Function.
 -- We use this so we can do ButtonCommand.
 -- Example: MenuLeftCommand=function(self) end.
-
--- Extra keybinds other than the game buttons. The key queues a command given by a string.
-TF_WHEEL.Keybinds = {
-	backslash = {'Search', PlayerNumber[1]},
-}
-
 function TF_WHEEL.Input(self)
 	return function(event)
 		--if not event.PlayerNumber then return end

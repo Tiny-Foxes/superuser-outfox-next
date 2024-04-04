@@ -1,9 +1,9 @@
 local options = { StartIndex = 1 }
 
-for k in pairs(TF_WHEEL.QuickStyleDB) do
+for game in ivalues(TF_WHEEL.GameDB) do
 	table.insert(options,
-		{k, function(self)
-			GAMEMAN:SetGame(k)
+		{game, function(self)
+			GAMEMAN:SetGame(game)
 		end}
 	)
 end

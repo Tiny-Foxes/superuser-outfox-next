@@ -180,6 +180,20 @@ if not GAMESTATE:Env().LastSong then
 	end
 end
 
+local function RefreshSongList()
+	style = TF_WHEEL.QuickStyleDB[GAMESTATE:GetCurrentGame():GetName()]
+	GAMESTATE:Env().AllSongs = GAMESTATE:Env().AllSongs or LoadModule('Wheel/Songs.Loader.lua')(style)
+	AllSongs = GAMESTATE:Env().AllSongs
+	AllGroups = LoadModule('Wheel/Group.List.lua')(AllSongs, TF_WHEEL.PreferredSort)
+	SongList = LoadModule('Wheel/Group.Sort.lua')(AllSongs, TF_WHEEL.PreferredSort)
+
+	while Index.Group > #AllGroups do Index.Group = Index.Group - #AllGroups end
+	while Index.Group < 1 do Index.Group = Index.Group + #AllGroups end
+	
+	CurGroup = AllGroups[Index.Group]
+	CurSongs = SongList[CurGroup]
+end
+
 local RequestOptions = false
 
 -- Function for moving along the song wheel.
@@ -367,9 +381,10 @@ local function SearchSongs(self)
 				MoveGroup(SuperActor.GetTree().GroupWheel, 0, AllGroups, true)
 				MoveSong(SuperActor.GetTree().SongWheel, 0, CurSongs, true)
 			else
+				Index.Group = 1
 				AllGroups = LoadModule('Wheel/Group.List.lua')(AllSongs, 'Search')
 				SongList = LoadModule('Wheel/Group.Sort.lua')(AllSongs, 'Search', answer)
-				CurGroup = AllGroups[1]
+				CurGroup = AllGroups[Index.Group]
 				CurSongs = SongList[CurGroup]
 				MoveGroup(SuperActor.GetTree().GroupWheel, 0, AllGroups, true)
 				MoveSong(SuperActor.GetTree().SongWheel, 0, CurSongs, true)
@@ -559,7 +574,7 @@ do songWheel
 			MESSAGEMAN:Broadcast('GroupUnselect')
 		end
 	end)
-	:SetCommand('Select', function(self)
+	:SetCommand('Sort', function(self)
 		if PlayersJoined[self.pn] then
 			MESSAGEMAN:Broadcast('CycleSort')
 		end
@@ -567,6 +582,23 @@ do songWheel
 	:SetCommand('Search', function(self)
 		if PlayersJoined[self.pn] then
 			SearchSongs(self)
+		end
+	end)
+	:SetCommand('Favorite', function(self)
+		if PlayersJoined[self.pn] and self.pn == GAMESTATE:GetMasterPlayerNumber() then
+			if not PROFILEMAN:IsPersistentProfile(self.pn) then return end
+			local prof = PROFILEMAN:GetProfile(self.pn)
+			local song = CurSongs[Index.Song]
+			if not song then return end
+			if prof:SongIsFavorite(song) then
+				prof:RemoveSongFromFavorites(song)
+				lua.ReportScriptError('Song removed from favorites.')
+				RefreshSongList()
+			else
+				prof:AddSongToFavorites(song)
+				lua.ReportScriptError('Song added to favorites.')
+				RefreshSongList()
+			end
 		end
 	end)
 	:SetCommand('Start', function(self)
@@ -806,12 +838,12 @@ do groupWheel
 	end)
 	:SetCommand('Back', function(self)
 		-- If both players are joined, unjoin the player at input.
-		if PlayersJoined[PLAYER_1] and PlayersJoined[PLAYER_2] then
+		if PlayersJoined[PLAYER_1] and PlayersJoined[PLAYER_2] and self.pn ~= GAMESTATE:GetMasterPlayerNumber() then
 			GAMESTATE:UnjoinPlayer(self.pn)
 			GAMESTATE:SetCurrentStyle(style)
 			PlayersJoined[self.pn] = false
 		-- Otherwise, if this player is still joined, cancel to the previous screen.
-		elseif PlayersJoined[self.pn] then
+		elseif PlayersJoined[self.pn] or self.pn == GAMESTATE:GetMasterPlayerNumber() then
 			SCREENMAN:PlayCancelSound()
 			for plr in ivalues(PlayerNumber) do
 				SCREENMAN:set_input_redirected(plr, false)
@@ -819,7 +851,7 @@ do groupWheel
 			SCREENMAN:GetTopScreen():Cancel()
 		end
 	end)
-	:SetCommand('Select', function(self)
+	:SetCommand('Sort', function(self)
 		if PlayersJoined[self.pn] then
 			MESSAGEMAN:Broadcast('CycleSort')
 		end

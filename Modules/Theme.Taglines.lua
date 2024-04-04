@@ -3,7 +3,6 @@ local taglines = {
 		'Hello, World.',
 		'This is who we are.',
 		'Let\'s get technical.',
-		'You ARE the elevated privilege.',
 		'Only you can limit your creativity.',
 		'Shoot the moon and you will hit it.',
 		'Faith can be the greatest logic of all.',

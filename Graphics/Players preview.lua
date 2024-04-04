@@ -215,14 +215,17 @@ for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 				self:AutoPlay(false)
 				self:SetNoteDataFromLua({})
 				if not song then return end
-				local chart
+				local chartnum, chart
 				for n, c in ipairs(song:GetAllSteps()) do
 					if c == GAMESTATE:GetCurrentSteps(v) then
-						chart = n
+						chartnum = n
+						chart = c
 					end
 				end
 				if not chart then return end
-				local nd = song:GetNoteData(chart)
+				local ctype = chart:GetStepsType():lower()
+				GAMESTATE:SetCurrentStyle(ctype:sub(1 - ctype:reverse():find('_'), -1))
+				local nd = song:GetNoteData(chartnum)
 				if not nd then return end
 				self:SetNoteDataFromLua(nd)
 				self:AutoPlay(true)

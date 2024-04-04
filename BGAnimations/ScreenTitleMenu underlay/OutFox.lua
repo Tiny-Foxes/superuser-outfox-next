@@ -158,14 +158,24 @@ do mascotAF
 		self:linear(0.5):diffusealpha(0)
 	end)
 end
+
 -- MascotFrame.Mascot
+local mPng = LoadModule('Config.Load.lua')('SuperuserMascot', 'Save/OutFoxPrefs.ini')
+if mPng:find('Random') then
+	local mPath = THEME:GetPathG('', 'mascots')
+	local m = FILEMAN:GetDirListing(mPath..'/', false, true)
+	local mIdx = math.ceil(OFMath.randomfloat() * #m)
+	mPng = m[mIdx]
+end
+
 do mascot
-	-- NOTE: Maybe random mascots here? ~Sudo
-	:SetAttribute('Texture', THEME:GetPathG('ScreenTitleMenu', 'mascot'))
+	:SetAttribute('Texture', mPng)
 	:SetCommand('Init', function(self)
 		self
 			:zoom(1.2)
 			:xy(-180, 320)
+			:cropbottom(0.475)
+			:fadebottom(0.05)
 			:bob()
 			:effectmagnitude(0, 4, 0)
 			:effectperiod(4)
@@ -286,6 +296,14 @@ do uiPoweredBy
 	end)
 end
 
+do uiFlair
+	:SetAttribute('Text', 'Alpha V')
+	:SetCommand('Init', function(self)
+		self
+			:Center()
+	end)
+end
+
 local uiTitleBack = SuperActor.new('Model')
 do uiTitleBack
 	:SetAttribute('Materials', THEME:GetPathG('ScreenTitleMenu', 'logo'))
@@ -379,7 +397,6 @@ do uiTitleColor
 		else
 			self:diffuse(ThemeColor.TitleBottom):diffusetopedge(ThemeColor.TitleTop)
 		end
-
 	end)
 	:SetCommand('On', function(self)
 		self
@@ -461,9 +478,13 @@ do uiAuthor
 			:halign(1)
 			:valign(1)
 			:cropright(1)
+		-- until we can find a good way to pair up the mascot with the artist,
+		-- this will be commented out. a wrong credit is worse than no credit.
+		--[[
 		if not splash and LoadModule('Config.Load.lua')('ShowMascotCharacter', 'Save/OutFoxPrefs.ini') then
 			self:settext('Theme by Sudospective\nArt by PrincessRaevinFlash')
 		end
+		--]]
 	end)
 	:SetCommand('On', function(self)
 		self
@@ -643,7 +664,7 @@ do uiDetails
 		text = text..'\n'..songstats
 		local notes = {
 			'subo notes:',
-			'- prepare for split between lts and a5',
+			'- undo the superactor stuff its old .n.',
 		}
 		if subo_notes then text = text..'\n'..table.concat(notes, '\n') end
 		self
@@ -656,8 +677,6 @@ do uiDetails
 	end)
 	:AddToTree('GameDetails')
 end
-
-
 
 --[[
 	Current tree structure:
@@ -682,6 +701,7 @@ end
 	      - Author
 	      - Version
 	      - Social
+	- NetNode
 --]]
 
 

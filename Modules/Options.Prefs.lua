@@ -444,6 +444,12 @@ return {
 		Choices = LoadModule('Theme.Mascots.lua').Choices,
 		Values = LoadModule('Theme.Mascots.lua').Values,
 	},
+	SuperuserBGMusic =
+	{
+		Default = true,
+		Choices = { OptionNameString('On'), OptionNameString('Off') },
+		Values = { true, false },
+	},
 	LifeType =
 	{
 		Default = "Bar",

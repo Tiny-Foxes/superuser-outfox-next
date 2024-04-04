@@ -1,10 +1,23 @@
 local taglines = {
-
+	'gimme a kiss bb',
+	'IT\'S SO REAL',
+	'drink water',
+	'LET\'S GOOOOOOOO!',
+	'You can wish for a bicycle if you want to.',
+	'Florida Man Arrested For Eating Paint',
+	'I definitely don\'t have the launch codes.',
+	'No, I won\'t teach you how to hack your school\'s Wi-Fi.',
+	'play tunic NOW',
+	--'🐱',
 }
+local idx = math.random(1, #taglines)
+local line = taglines[idx]
+
+--line = taglines[#taglines]
 
 return Def.ActorFrame {
 	OnCommand = function(self)
-		self:zoom(SCREEN_HEIGHT / 720)
+		self:basezoom(SCREEN_HEIGHT / 720):zoom(1.05)
 	end,
 	Def.Sound {
 		File = 'nyoron.ogg',
@@ -20,7 +33,7 @@ return Def.ActorFrame {
 	Def.Sprite {
 		Texture = 'bg.png',
 		OnCommand = function(self)
-			self:zoom(1.5)
+			self:zoom(SCREEN_HEIGHT / 480)
 		end,
 	},
 	Def.Sprite {
@@ -38,11 +51,35 @@ return Def.ActorFrame {
 				:zoom(0)
 		end,
 	},
+	Def.Text {
+		Font = THEME:GetPathF('', 'SudoFont.ttf'),
+		Fallback = THEME:GetPathF('', 'NotoSans-Regular.ttf'),
+		Size = 48,
+		Text = line,
+		StrokeSize = 2,
+		InitCommand = function(self)
+			self:MainActor()
+				:diffuse(color('#5E3F66'))
+			self:StrokeActor()
+				:diffuse(1, 1, 1, 1)
+
+			self
+				:Regen()
+				:y(SCREEN_CENTER_Y - 150)
+				:diffusealpha(0)
+				:sleep(1.5)
+				:linear(0.25)
+				:diffusealpha(1)
+				:sleep(1)
+				:linear(0.25)
+				:diffusealpha(0)
+		end,
+	},
 	Def.Quad {
 		InitCommand = function(self)
 			self
 				:zoomto(SCREEN_WIDTH, SCREEN_HEIGHT)
-				:diffuse(color('#000000'))
+				:diffuse(0, 0, 0, 1)
 				:linear(0.25)
 				:diffusealpha(0)
 				:sleep(3)
@@ -54,5 +91,5 @@ return Def.ActorFrame {
 		EndInitCommand = function(self)
 			SCREENMAN:GetTopScreen():StartTransitioningScreen('SM_GoToNextScreen')
 		end,
-	}
+	},
 }
