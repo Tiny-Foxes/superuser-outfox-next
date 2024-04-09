@@ -357,4 +357,4 @@ if list_only then
 	end
 	return list
 end
-return Colors[scheme] or Colors[1]
+return scheme and Colors[scheme] or Colors[1]

@@ -224,7 +224,11 @@ for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 				end
 				if not chart then return end
 				local ctype = chart:GetStepsType():lower()
-				GAMESTATE:SetCurrentStyle(ctype:sub(1 - ctype:reverse():find('_'), -1))
+				if GAMESTATE:GetNumPlayersEnabled() > 1 then
+					GAMESTATE:SetCurrentStyle('versus')
+				else
+					GAMESTATE:SetCurrentStyle(ctype:sub(1 - ctype:reverse():find('_'), -1))
+				end
 				local nd = song:GetNoteData(chartnum)
 				if not nd then return end
 				self:SetNoteDataFromLua(nd)
