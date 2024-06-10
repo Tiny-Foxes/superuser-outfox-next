@@ -25,7 +25,9 @@ return Def.ActorFrame {
 		end,
 		UpdateCommand = function(self)
 			shader_time = shader_time + self:GetEffectDelta()
-			self:GetShader():uniform1f('realtime', shader_time)
+			if self:GetShader() then
+				self:GetShader():uniform1f('realtime', shader_time)
+			end
 			self:sleep(self:GetEffectDelta()):queuecommand('Update')
 		end,
 	},

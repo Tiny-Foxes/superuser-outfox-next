@@ -1,84 +1,80 @@
 local list_only = ...
 
-local function JudgmentColor(j)
+local JudgmentColors = {
+	-- Not fully implemented. ~Sudo
+	Original = {
+		W1 = color("#92d5dd"),
+		W2 = color("#ccd01f"),
+		W3 = color("#b2dd56"),
+		W4 = color("#32abd3"),
+		W5 = color("#c84ad2"),
+		Miss = color("#fa282f"),
+	},
+	ITG = {
+		W1 = color("#a3dde4"),
+		W2 = color("#d0d41f"),
+		W3 = color("#8ecd04"),
+		W4 = color("#9d30d3"),
+		W5 = color("#ea8035"),
+		Miss = color("#fa282f"),
+	},
+	Advanced = {
+		ProW1 = color("#eee133"),
+		ProW2 = color("#f7ebc0"),
+		ProW3 = color("#acf8fa"),
+		ProW4 = color("#e3ebf1"),
+		ProW5 = color("#b3dbf1"),
+		W1 = color("#bfeaff"),
+		W2 = color("#fff568"),
+		W3 = color("#a4ff00"),
+		W4 = color("#34bfff"),
+		W5 = color("#e44dff"),
+		Miss = color("#ff3c3c"),
+	},
+	FAPlus = {
+		ProW1 = color("#a7ffff"),
+		W1 = color("#f2f6fb"),
+		W2 = color("#ffff84"),
+		W3 = color("#a7ffa7"),
+		W4 = color("#ffa7ff"),
+		W5 = color("#ffb8a7"),
+		Miss = color("#ff8b8b"),
+	},
+	ECFA = {
+		ProW1 = color("#f2f6fb"),
+		W1 = color("#a7ffff"),
+		W2 = color("#ffff84"),
+		W3 = color("#a7ffa7"),
+		W4 = color("#ffa7ff"),
+		W5 = color("#ffb8a7"),
+		Miss = color("#ff8b8b"),
+	},
+	Pump = {
+		W1 = color('#84c7ea'),
+		W2 = color('#97e270'),
+		W3 = color('#ffe4b3'),
+		W4 = color('#c183e5'),
+		Miss = color('#e98061'),
+	},
+	Taitai = {
+		W1 = color('#ffed7c'),
+		W2 = color('#fcfcfc'),
+		W3 = color('#c58bfb'),
+		Miss = color('#c58bfb'),
+	},
+	BMS = {
+		W1 = color('#ffb463'),
+		W2 = color('#407fec'),
+		W3 = color('#407fec'),
+		W4 = color('#f9aa2a'),
+		W5 = color('#f9aa2a'),
+		Miss = color('#ff958d'),
+	},
+}
+
+local function JudgmentToColor(j)
 	local timing = LoadModule('Options.ReturnCurrentTiming.lua')().Name
-	local c = {}
-	c = {
-		-- Not fully implemented. ~Sudo
-		Original = {
-			W1 = color("#92d5dd"),
-			W2 = color("#ccd01f"),
-			W3 = color("#b2dd56"),
-			W4 = color("#32abd3"),
-			W5 = color("#c84ad2"),
-			Miss = color("#fa282f"),
-		},
-		ITG = {
-			W1 = color("#a3dde4"),
-			W2 = color("#d0d41f"),
-			W3 = color("#8ecd04"),
-			W4 = color("#9d30d3"),
-			W5 = color("#ea8035"),
-			Miss = color("#fa282f"),
-		},
-		Advanced = {
-			ProW1 = color("#eee133"),
-			ProW2 = color("#f7ebc0"),
-			ProW3 = color("#acf8fa"),
-			ProW4 = color("#e3ebf1"),
-			ProW5 = color("#b3dbf1"),
-			W1 = color("#bfeaff"),
-			W2 = color("#fff568"),
-			W3 = color("#a4ff00"),
-			W4 = color("#34bfff"),
-			W5 = color("#e44dff"),
-			Miss = color("#ff3c3c"),
-		},
-		FAPlus = {
-			ProW1 = color("#a7ffff"),
-			W1 = color("#f2f6fb"),
-			W2 = color("#ffff84"),
-			W3 = color("#a7ffa7"),
-			W4 = color("#ffa7ff"),
-			W5 = color("#ffb8a7"),
-			Miss = color("#ff8b8b"),
-		},
-		ECFA = {
-			ProW1 = color("#f2f6fb"),
-			W1 = color("#a7ffff"),
-			W2 = color("#ffff84"),
-			W3 = color("#a7ffa7"),
-			W4 = color("#ffa7ff"),
-			W5 = color("#ffb8a7"),
-			Miss = color("#ff8b8b"),
-		},
-		Pump = {
-			W1 = color('#84c7ea'),
-			W2 = color('#97e270'),
-			W3 = color('#ffe4b3'),
-			W4 = color('#c183e5'),
-			Miss = color('#e98061'),
-		},
-		Taitai = {
-			W1 = color('#ffed7c'),
-			W2 = color('#fcfcfc'),
-			W3 = color('#c58bfb'),
-			Miss = color('#c58bfb'),
-		},
-		BMS = {
-			W1 = color('#ffb463'),
-			W2 = color('#407fec'),
-			W3 = color('#407fec'),
-			W4 = color('#f9aa2a'),
-			W5 = color('#f9aa2a'),
-			Miss = color('#ff958d'),
-		},
-	}
-	if c[timing] then
-		return c[timing][j] or color('#FFFFFF')
-	else
-		return color('#FFFFFF')
-	end
+	return JudgmentColors[timing] and JudgmentColors[timing][j] or color('#FFFFFF')
 end
 
 local Colors = {
@@ -102,25 +98,26 @@ local Colors = {
 		Easy = color('#699429'),
 		Medium = color('#B4943F'),
 		Hard = color('#AB3541'),
-		Crazy = color('#AB3541'),
 		Challenge = color('#618FB0'),
+		Crazy = color('#AB3541'),
 		Nightmare = color('#618FB0'),
+		Another = color('#8000FF'),
 		Edit = color('#808080'),
 		Couple = color('#F04D7B'),
 		Routine = color('#5292EB'),
 
 		-- Judgment Colors
-		ProW1	= JudgmentColor('ProW1'),
-		ProW2	= JudgmentColor('ProW2'),
-		ProW3	= JudgmentColor('ProW3'),
-		ProW4	= JudgmentColor('ProW4'),
-		ProW5	= JudgmentColor('ProW5'),
-		W1	= JudgmentColor('W1'),
-		W2	= JudgmentColor('W2'),
-		W3	= JudgmentColor('W3'),
-		W4	= JudgmentColor('W4'),
-		W5	= JudgmentColor('W5'),
-		Miss = JudgmentColor('Miss'),
+		ProW1	= JudgmentToColor('ProW1'),
+		ProW2	= JudgmentToColor('ProW2'),
+		ProW3	= JudgmentToColor('ProW3'),
+		ProW4	= JudgmentToColor('ProW4'),
+		ProW5	= JudgmentToColor('ProW5'),
+		W1	= JudgmentToColor('W1'),
+		W2	= JudgmentToColor('W2'),
+		W3	= JudgmentToColor('W3'),
+		W4	= JudgmentToColor('W4'),
+		W5	= JudgmentToColor('W5'),
+		Miss = JudgmentToColor('Miss'),
 		Held = color("#ffffff"),
 		MaxCombo = color("#ffc600"),
 

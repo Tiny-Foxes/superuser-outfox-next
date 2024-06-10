@@ -8,6 +8,7 @@ local taglines = {
 	'I definitely don\'t have the launch codes.',
 	'No, I won\'t teach you how to hack your school\'s Wi-Fi.',
 	'play tunic NOW',
+	'A chicken nugget, just for you!',
 	--'🐱',
 }
 local idx = math.random(1, #taglines)
@@ -17,7 +18,7 @@ local line = taglines[idx]
 
 return Def.ActorFrame {
 	OnCommand = function(self)
-		self:basezoom(SCREEN_HEIGHT / 720):zoom(1.05)
+		self:Center():basezoom(SCREEN_HEIGHT / 720):zoom(1.05)
 	end,
 	Def.Sound {
 		File = 'nyoron.ogg',
@@ -86,10 +87,7 @@ return Def.ActorFrame {
 				:linear(0.25)
 				:diffusealpha(1)
 				:sleep(1)
-				:queuecommand('EndInit')
-		end,
-		EndInitCommand = function(self)
-			SCREENMAN:GetTopScreen():StartTransitioningScreen('SM_GoToNextScreen')
+				:queuemessage('EndInit')
 		end,
 	},
 }

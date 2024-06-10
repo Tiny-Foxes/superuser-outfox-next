@@ -86,6 +86,43 @@ return Def.ActorFrame {
 		},
 	},
 	Def.ActorFrame {
+		Name = 'DiffDisplay',
+		InitCommand = function(self)
+			self:xy(120, 350)
+		end,
+		CurrentSongChangedMessageCommand = function(self)
+			local song = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong()
+			local charts = GAMESTATE:IsCourseMode() and song:GetAllTrails() or song:GetAllSteps()
+			self:RemoveAllChildren()
+			local inserted = {}
+			for i, v in ipairs(charts) do
+				if not inserted[v:GetDifficulty()..v:GetChartName()] then
+					print(v:GetDescription())
+					self:AddChild(function()
+						return Def.ActorFrame {
+							InitCommand = function(self)
+								self:x(32 * (i - 1))
+							end,
+							Def.Quad {
+								InitCommand = function(self)
+									self
+										:SetSize(32, 32)
+										:skewx(-0.5)
+										:diffuse(ThemeColor[ToEnumShortString(v:GetDifficulty())])
+								end,
+							},
+							Def.BitmapText {
+								Font = 'Common Normal',
+								Text = v:GetMeter(),
+							},
+						}
+					end)
+					inserted[v:GetDifficulty()..v:GetChartName()] = v
+				end
+			end
+		end
+	},
+	Def.ActorFrame {
 		Name = 'InfoFrame',
 		InitCommand = function(self)
 			self:xy(290, 450)

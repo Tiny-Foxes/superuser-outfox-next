@@ -161,11 +161,13 @@ end
 
 -- MascotFrame.Mascot
 local mPng = LoadModule('Config.Load.lua')('SuperuserMascot', 'Save/OutFoxPrefs.ini')
-if mPng:find('Random') then
+if mPng and mPng:find('Random') then
 	local mPath = THEME:GetPathG('', 'mascots')
 	local m = FILEMAN:GetDirListing(mPath..'/', false, true)
 	local mIdx = math.ceil(OFMath.randomfloat() * #m)
 	mPng = m[mIdx]
+else
+	mPng = nil
 end
 
 do mascot

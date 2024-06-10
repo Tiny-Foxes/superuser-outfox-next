@@ -1,4 +1,3 @@
-local music_playing = false
 return Def.ActorFrame {
 	Def.Actor {
 		OnCommand = function(self)
