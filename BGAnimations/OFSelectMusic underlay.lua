@@ -234,6 +234,7 @@ return Def.ActorFrame {
 				local str = (
 					'BPM: '..
 					-- If we have significant BPM changes to display and we're not just doubling BPM, put both display BPMs.
+					-- dont make this a ternary like i did kids
 					(((not song:IsDisplayBpmSpecified() and song:HasSignificantBPMChanges() and (song:GetDisplayBpms()[2] / song:GetDisplayBpms()[1] ~= 2)) and tostring(math.floor(song:GetDisplayBpms()[1])..'-')) or '')..
 					data[1]..
 					'  |  Length: '..

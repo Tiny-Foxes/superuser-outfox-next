@@ -1,3 +1,5 @@
+.vscode/
+.github/
 BGAnimations/ScreenIdleGame underlay
 Sounds/ScreenIdleGame music (loop).mp3
 Other/songlist.json

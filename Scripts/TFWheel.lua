@@ -133,6 +133,11 @@ TF_WHEEL.SortType = {
 		local upper = lower + 30
 		return SecondsToMSS(lower) .. '-' .. SecondsToMSS(upper)
 	end,
+	--[[
+	LastPlayed = function(a)
+
+	end,
+	--]]
 	Search = function(a)
 		return 'Results'
 	end,
@@ -230,9 +235,10 @@ local subtext = {
 	'it better not suck',
 	'youre really picking for the chart though',
 	'You deserve this moment. You EARNED this moment.',
+	'play tetrahol lmao',
 }
 
 function TF_WHEEL.RandomSubText()
 	--return subtext[#subtext]
-	return subtext[math.random(1, #subtext)]
+	return subtext[(OFMath.randomint() % #subtext) + 1]
 end

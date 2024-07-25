@@ -4,7 +4,7 @@ konko()
 local ThemeColor = LoadModule('Theme.Colors.lua')
 local SuperActor = LoadModule('Konko.SuperActor.lua')
 
-local FRAMERATE = 0
+local FRAMERATE = 60
 
 local GRAVITY = {
 	P1 = 0.98,
