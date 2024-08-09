@@ -205,7 +205,7 @@ return Def.ActorFrame {
 				local target = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse()) or GAMESTATE:GetCurrentSong()
 				local bannerpath = target:GetBannerPath()
 				if bannerpath then
-					self:LoadFromCachedBanner(bannerpath)
+					self:LoadFromSong(GAMESTATE:GetCurrentSong())
 				else
 					self:LoadFromSongGroup(target:GetGroupName())
 				end

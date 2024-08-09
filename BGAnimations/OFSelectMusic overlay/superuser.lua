@@ -592,11 +592,11 @@ do songWheel
 			if not song then return end
 			if prof:SongIsFavorite(song) then
 				prof:RemoveSongFromFavorites(song)
-				lua.ReportScriptError('Song removed from favorites.')
+				SCREENMAN:SystemMessage('Song removed from favorites.')
 				RefreshSongList()
 			else
 				prof:AddSongToFavorites(song)
-				lua.ReportScriptError('Song added to favorites.')
+				SCREENMAN:SystemMessage('Song added to favorites.')
 				RefreshSongList()
 			end
 		end
@@ -837,12 +837,12 @@ do groupWheel
 		end
 	end)
 	:SetCommand('Back', function(self)
-		-- If both players are joined, unjoin the player at input.
+		-- If both players are joined and we are not the master player, unjoin the player at input.
 		if PlayersJoined[PLAYER_1] and PlayersJoined[PLAYER_2] and self.pn ~= GAMESTATE:GetMasterPlayerNumber() then
 			GAMESTATE:UnjoinPlayer(self.pn)
 			GAMESTATE:SetCurrentStyle(style)
 			PlayersJoined[self.pn] = false
-		-- Otherwise, if this player is still joined, cancel to the previous screen.
+		-- Otherwise, if this player is still joined or we are the master player, cancel to the previous screen.
 		elseif PlayersJoined[self.pn] or self.pn == GAMESTATE:GetMasterPlayerNumber() then
 			SCREENMAN:PlayCancelSound()
 			for plr in ivalues(PlayerNumber) do

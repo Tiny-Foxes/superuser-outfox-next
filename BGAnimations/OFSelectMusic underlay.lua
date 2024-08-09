@@ -64,16 +64,21 @@ return Def.ActorFrame {
 		Def.Banner {
 			Name = 'Banner',
 			CurrentSongChangedMessageCommand = function(self)
+				local song = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong()
+				if song:HasBanner() then
+					self:LoadFromCachedBanner(song:GetBannerPath())
+				end
+				local w, h = self:GetWidth(), self:GetHeight()
 				self
 					:stoptweening()
-					:easeoutexpo(0.1)
-					:diffusealpha(0)
+					:zoomto(160 * w/h, 160)
+					:linear(0.1)
 					:queuecommand('LoadBanner')
 			end,
 			LoadBannerCommand = function(self)
 				local song = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong()
 				if song:HasBanner() then
-					self:LoadFromCachedBanner(song:GetBannerPath())
+					self:LoadFromSong(song)
 				elseif GAMESTATE:IsCourseMode() then
 					self:LoadFromCourse(song)
 				else
@@ -81,7 +86,6 @@ return Def.ActorFrame {
 				end
 				local w, h = self:GetWidth(), self:GetHeight()
 				self:zoomto(160 * w/h, 160)
-				self:easeinoutsine(0.1):diffusealpha(1)
 			end,
 		},
 	},
@@ -97,7 +101,6 @@ return Def.ActorFrame {
 			local inserted = {}
 			for i, v in ipairs(charts) do
 				if not inserted[v:GetDifficulty()..v:GetChartName()] then
-					print(v:GetDescription())
 					self:AddChild(function()
 						return Def.ActorFrame {
 							InitCommand = function(self)
