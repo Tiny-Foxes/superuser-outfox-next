@@ -124,11 +124,11 @@ for k in pairs(plrs) do
 			self:addx(-SCY * 0.6 + 3):addy(-12)
 		end)
 		:SetCommand('On', function(self)
-			local meter = math.floor(CurDiff[k]:GetMeter() * 10) * 0.1
+			local meter = math.floor((CurDiff[k]:GetMeter() + 0.05) * 10) * 0.1
 			self:settext(meter)
 		end)
 		:SetCommand('SetDifficulty'..PN, function(self)
-			local meter = math.floor(CurDiff[k]:GetMeter() * 10) * 0.1
+			local meter = math.floor((CurDiff[k]:GetMeter() + 0.05) * 10) * 0.1
 			self:settext(meter)
 		end)
 	end

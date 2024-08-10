@@ -100,6 +100,10 @@ return Def.ActorFrame {
 			self:RemoveAllChildren()
 			local inserted = {}
 			for i, v in ipairs(charts) do
+				local text = tostring(math.floor(v:GetMeter()))
+				if v:GetMeter() > math.floor(v:GetMeter()) then
+					text = text.."+"
+				end
 				if not inserted[v:GetDifficulty()..v:GetChartName()] then
 					self:AddChild(function()
 						return Def.ActorFrame {
@@ -116,7 +120,7 @@ return Def.ActorFrame {
 							},
 							Def.BitmapText {
 								Font = 'Common Normal',
-								Text = v:GetMeter(),
+								Text = text,
 							},
 						}
 					end)
