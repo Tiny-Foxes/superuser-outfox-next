@@ -14,8 +14,10 @@ local gs = LoadModule('GrooveStats.Handler.lua')
 
 if gs.Enabled() then
 	local pingres = gs.ping()
-	if not pingres then
+	if not pingres or pingres.status == 'timeout' then
 		SCREENMAN:SystemMessage('GrooveStats connection timed out.')
+	elseif pingres.status == 'unknown' then
+		SCREENMAN:SystemMessage('Unable to connect to GrooveStats.')
 	elseif pingres.status ~= 'inactive' then
 		local gsver = pingres.version.major..'.'..pingres.version.minor..'.'..pingres.version.patch
 		SCREENMAN:SystemMessage('Running GrooveStats version '..gsver)

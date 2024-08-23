@@ -336,7 +336,7 @@ function gs.ChartHash(plr)
 	end
 end
 
-function gs.request(type, data)
+function gs.request(reqtype, data)
 	if not gs.Enabled() then
 		return {
 			status = 'inactive',
@@ -347,8 +347,8 @@ function gs.request(type, data)
 	local now = GetTimeSinceStart()
 	local time = 0
 	local timeout = gs.timeout()
-	if type == 'ping' then
-		id = type
+	if reqtype == 'ping' then
+		id = reqtype
 		data = {
 			action = 'ping',
 			protocol = 1,
@@ -359,6 +359,12 @@ function gs.request(type, data)
 		while true do
 			time = time + (GetTimeSinceStart() - now)
 			now = GetTimeSinceStart()
+			if not FILEMAN:DoesFileExist(path..'responses/'..id..'.json') then
+				return {
+					status = 'unknown',
+					data = {}
+				}
+			end
 			local res = File.Read(path..'responses/'..id..'.json')
 			if res then
 				coroutine.yield(JsonDecode(res))
@@ -375,7 +381,7 @@ function gs.request(type, data)
 		end
 	end)
 	local s, ret = coroutine.resume(req, data)
-	MESSAGEMAN:Broadcast(type, ret)
+	MESSAGEMAN:Broadcast(reqtype, ret)
 	return ret
 end
 
