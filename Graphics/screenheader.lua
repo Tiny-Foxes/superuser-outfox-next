@@ -49,7 +49,7 @@ return Def.ActorFrame {
 	},
 	Def.BitmapText {
 		Name = 'Text',
-		Font = 'Stylized Large',
+		Font = 'Common Large',
 		OnCommand = function(self)
 			self
 				:xy(-SCREEN_CENTER_X + 20, 8)

@@ -187,7 +187,8 @@ local function GSPrefs(plr)
 end
 
 function gs.Enabled()
-	if not ProductVersion():find('%.4') then return false end
+	local version = tonumber(ProductVersion():sub(1, ProductVersion():find("%-") - 1))
+	if version < 0.4 then return false end
 	return (#FILEMAN:GetDirListing(path, true, false) > 0)
 end
 

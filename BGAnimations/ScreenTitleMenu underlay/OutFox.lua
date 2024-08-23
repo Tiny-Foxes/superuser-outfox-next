@@ -680,6 +680,7 @@ do uiDetails
 	:AddToTree('GameDetails')
 end
 
+
 --[[
 	Current tree structure:
 

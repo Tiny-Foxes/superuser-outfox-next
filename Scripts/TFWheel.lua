@@ -29,22 +29,134 @@ end
 TF_WHEEL = {}
 
 TF_WHEEL.StyleDB = {
-	["dance_single"] = "single", ["dance_double"] = "double", ["dance_couple"] = "couple", ["dance_solo"] = "solo", ["dance_threepanel"] = "threepanel", ["dance_routine"] = "routine",
-	["pump_single"] = "single", ["pump_halfdouble"] = "halfdouble", ["pump_double"] = "double", ["pump_couple"] = "couple", ["pump_routine"] = "routine",
-	["ez2_single"] = "single", ["ez2_double"] = "double", ["ez2-real"] = "real",
-	["para_single"] = "single", ["para_double"] = "double", ["para_eight"] = "single-eight",
+	--Dance
+	["dance_single"] = "single",
+	["dance_double"] = "double",
+	["dance_couple"] = "couple",
+	["dance_solo"] = "solo",
+	["dance_threepanel"] = "threepanel",
+	["dance_routine"] = "routine",
+
+	--Pump
+	["pump_single"] = "single",
+	["pump_halfdouble"] = "halfdouble",
+	["pump_double"] = "double",
+	["pump_couple"] = "couple",
+	["pump_routine"] = "routine",
+
+	--SMX
+	["smx_single"] = "single",
+	["smx_double6"] = "double6",
+	["smx_double10"] = "double10",
+	["smx_couple"] = "couple",
+	["smx_routine"] = "routine",
+
+	--Ez2
+	["ez2_single"] = "single",
+	["ez2_double"] = "double",
+	["ez2-real"] = "real",
+
+	--Para
+	["para_single"] = "single",
+	["para_double"] = "double",
+	["para_eight"] = "single-eight",
+
+	--Ds3ddx
 	["ds3ddx_single"] = "single",
-	["bm_single5"] = "single5", ["bm_double5"] = "double5", ["bm_single7"] = "single7", ["bm_double7"] = "double7",
-	["maniax_single"] = "single", ["maniax_double"] = "double",
-	["techno_single4"] = "single4", ["techno_single5"] = "single5", ["techno_single8"] = "single8", ["techno_single9"] = "single9", ["techno_double4"] = "double4", ["techno_double5"] = "double5", ["techno_double8"] = "double8", ["techno_double9"] = "double9",
-	["pnm_three"] = "popn-three", ["pnm_four"] = "pnm-four", ["pnm_five"] = "popn-five", ["pnm_seven"] = "popn-seven", ["pnm_nine"] = "popn-nine",
-	["gddm_new"] = "gddm-new", ["gddm_old"] = "gddm-old",
-	["guitar_five"] = "guitar-five", ["bass_six"] = "bass-six", ["guitar_six"] = "guitar-six", ["guitar_three"] = "guitar-three", ["bass_four"] = "bass-four",
-	["gh_solo"] = "solo", ["gh_solo6"] = "solo6", ["gh_bass"] = "bass", ["gh_bass6"] = "bass6", ["gh_rhythm"] = "rhythm", ["gh_rhythm6"] = "rhythm6",
-	["kb1_single"] = "single1", ["kb2_single"] = "single2", ["kb3_single"] = "single3", ["kb4_single"] = "single4", ["kb5_single"] = "single5", ["kb6_single"] = "single6", ["kb7_single"] = "single7", ["kb8_single"] = "single8", ["kb9_single"] = "single9", ["kb10_single"] = "single10", ["kb11_single"] = "single11", ["kb12_single"] = "single12", ["kb13_single"] = "single13", ["kb14_single"] = "single14", ["kb15_single"] = "single15",
+	["ds3ddx_double"] = "double",
+	["ds3ddx_single5"] = "single5",
+	["ds3ddx_double5"] = "double5",
+	["ds3ddx_routine5"] = "routine5",
+
+	--Be-Mu
+	["bm_single5"] = "single5",
+	["bm_double5"] = "double5",
+	["bm_single6"] = "single6",
+	["bm_double6"] = "double6",
+	["bm_single7"] = "single7",
+	["bm_double7"] = "double7",
+
+	--Maniax
+	["maniax_single"] = "single",
+	["maniax_double"] = "double",
+
+	--Stepstage
+	["stepstage_single"] = "single",
+	["stepstage_twin"] = "twin-single",
+
+	--Techno
+	["techno_single4"] = "single4",
+	["techno_single5"] = "single5",
+	["techno_single8"] = "single8",
+	["techno_single9"] = "single9",
+	["techno_double4"] = "double4",
+	["techno_double5"] = "double5",
+	["techno_double8"] = "double8",
+	["techno_double9"] = "double9",
+
+	--Po-Mu
+	["pnm_three"] = "po-mu-three",
+	["pnm_four"] = "po-mu-four",
+	["pnm_five"] = "po-mu-five",
+	["pnm_seven"] = "po-mu-seven",
+	["pnm_nine"] = "po-mu-nine",
+	["pnm_nine_double"] = "po-mu-nine-double",
+
+	--Gddm
+	["gddm_real"] = "gddm-real",
+	["gddm_new"] = "gddm-new",
+	["gddm_old"] = "gddm-old",
+
+	--Gdgf
+	["gdgf_five"] = "five-fret",
+	["gdgf_six"] = "six-fret",
+	["gdgf_three"] = "three-fret",
+	["gdgf_bass_five"] = "five-fret",
+	["gdgf_bass_six"] = "five-fret",
+	["gdgf_bass_three"] = "five-fret",
+
+	--GH
+	["gh_solo"] = "solo",
+	["gh_solo6"] = "solo6",
+	["gh_bass"] = "bass",
+	["gh_bass6"] = "bass6",
+	["gh_rhythm"] = "rhythm",
+	["gh_rhythm6"] = "rhythm6",
+	
+	--RB
+	["rb_easy"] = "rb-easy",
+	["rb_normal"] = "rb-normal",
+	["rb_normal5"] = "rb-normal5",
+	["rb_pro"] = "rb-pro",
+
+	--KBX
+	["kb1_single"] = "single1",
+	["kb2_single"] = "single2",
+	["kb3_single"] = "single3",
+	["kb4_single"] = "single4",
+	["kb5_single"] = "single5",
+	["kb6_single"] = "single6",
+	["kb7_single"] = "single7",
+	["kb8_single"] = "single8",
+	["kb9_single"] = "single9",
+	["kb10_single"] = "single10",
+	["kb11_single"] = "single11",
+	["kb12_single"] = "single12",
+	["kb13_single"] = "single13",
+	["kb14_single"] = "single14",
+	["kb15_single"] = "single15",
+
+	--Taiko
 	["taiko"] = "taiko-single",
+
+	--Lights
 	["lights_cabinet"] = "cabinet",
-	["kickbox_human"] = "human", ["kickbox_quadarm"] = "quadarm", ["kickbox_insect"] = "insect", ["kickbox_arachnid"] = "arachnid"
+
+	--Kickbox
+	["kickbox_human"] = "human",
+	["kickbox_quadarm"] = "quadarm",
+	["kickbox_insect"] = "insect",
+	["kickbox_arachnid"] = "arachnid"
 }
 -- If you have AutoStyle, this might be beneficial since it only lists the game mode name.
 TF_WHEEL.QuickStyleDB = {
@@ -58,6 +170,7 @@ TF_WHEEL.QuickStyleDB = {
 	gddm = 'gddm_new',
 	guitar = 'guitar-five',
 	gh = 'solo',
+	rb = 'single',
 	taiko = 'taiko',
 	para = 'single',
 	kbx = 'single4',
@@ -66,28 +179,7 @@ TF_WHEEL.QuickStyleDB = {
 	maniax = 'single',
 	stepstage = 'single',
 	lights = 'cabinet',
-	kickbox = 'human'
-}
-
-TF_WHEEL.GameDB = {
-	'dance',
-	'groove',
-	'pump',
-	'smx',
-	'techno',
-	'be-mu',
-	'po-mu',
-	'gddm',
-	'guitar',
-	'gh',
-	'taiko',
-	'para',
-	'kbx',
-	'ez2',
-	'ds3ddx',
-	'maniax',
-	'stepstage',
-	'kickbox',
+	kickbox = 'human',
 }
 
 TF_WHEEL.MPath = THEME:GetCurrentThemeDirectory().."Modules/"
@@ -133,11 +225,21 @@ TF_WHEEL.SortType = {
 		local upper = lower + 30
 		return SecondsToMSS(lower) .. '-' .. SecondsToMSS(upper)
 	end,
-	--[[
 	LastPlayed = function(a)
-
+		local prof = PROFILEMAN:GetMachineProfile()
+		local diff = prof:GetLastDifficulty()
+		local steps
+		for _, v in ipairs(a:GetAllSteps()) do
+			if diff == v:GetDifficulty() then
+				steps = v
+				break
+			end
+		end
+		if not steps then return 'Unknown' end
+		local scores = prof:GetHighScoreList(a, steps):GetHighScores()
+		if #scores < 1 then return 'No Score' end
+		return scores[1]:GetDate()
 	end,
-	--]]
 	Search = function(a)
 		return 'Results'
 	end,

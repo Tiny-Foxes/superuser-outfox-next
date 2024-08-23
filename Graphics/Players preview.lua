@@ -233,12 +233,16 @@ for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 				if not nd then return end
 				self:SetNoteDataFromLua(nd)
 				self:AutoPlay(true)
+				--self:ChangeReload(chart)
 				nf.chart[i] = nd
 			end,
 			MusicLoopEndMessageCommand = function(self)
 				self:AutoPlay(false)
 				self:SetNoteDataFromLua(nf.chart[i])
+				self:GetPlayerOptions('ModsLevel_Current')
+					:FromString(GAMESTATE:GetPlayerState(v):GetPlayerOptionsString('ModsLevel_Preferred'))
 				self:AutoPlay(true)
+				--self:ChangeReload(chart)
 			end,
 			LuaNoteSkinsChangedMessageCommand = function(self, param)
 				if param.pn ~= v then return end

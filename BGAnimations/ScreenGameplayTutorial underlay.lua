@@ -66,7 +66,7 @@ return Def.ActorFrame {
 		},
 		--Text
 		Def.BitmapText {
-			Font = 'Stylized Large',
+			Font = 'Common Large',
 			InitCommand = function(self)
 				if song then
 					self:settext(song:GetDisplayFullTitle())
@@ -78,7 +78,7 @@ return Def.ActorFrame {
 			end,
 		},
 		Def.BitmapText {
-			Font = 'Stylized Normal',
+			Font = 'Common Normal',
 			InitCommand = function(self)
 				if song then
 					self:settext(song:GetDisplayArtist())

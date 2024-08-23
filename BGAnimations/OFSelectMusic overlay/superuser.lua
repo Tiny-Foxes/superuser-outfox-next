@@ -26,6 +26,7 @@ local profiles = {
 for k in pairs(PlayersJoined) do
 	PlayersJoined[k] = GAMESTATE:IsSideJoined(k)
 end
+
 -- Song list indices.
 -- Group, song, and difficulty. Difficulty has one for each player.
 GAMESTATE:Env().Index = GAMESTATE:Env().Index or {
@@ -34,22 +35,30 @@ GAMESTATE:Env().Index = GAMESTATE:Env().Index or {
 }
 local Index = GAMESTATE:Env().Index
 
--- Wheel offsets.
--- Size, increment offset, decrement offset, center offset.
 local sorts = {
-	'Group', 'Title', 'Artist', 'Credit', 'Length',
+	'Group',
+	'Title',
+	'Artist',
+	'Credit',
+	'Length',
+	--'LastPlayed',
 	Reverse = function(self)
 		local t = {}
 		for i, v in ipairs(self) do
-			t[v] = i
+			if v ~= 'Reverse' then
+				t[v] = i
+			end
 		end
 		return t
 	end
 }
 local sortIdx = sorts:Reverse()[TF_WHEEL.PreferredSort]
+
+-- Wheel offsets.
+-- Size, increment offset, decrement offset, center offset.
 local wheel = {
 	Focus = 'Song',
-	NextScreen = 'OFGameplay',
+	NextScreen = 'ScreenGameplay',
 	Song = {
 		Size = 13,
 		Inc = -6,
