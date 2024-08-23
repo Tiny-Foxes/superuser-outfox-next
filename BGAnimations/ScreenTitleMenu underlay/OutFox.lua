@@ -28,7 +28,7 @@ end
 GAMESTATE:UpdateDiscordGameMode(GAMESTATE:GetCurrentGame():GetName())
 
 -- Define local variables and functions
-local scale = SH /480
+local scale = SH / 480
 local splash = false
 
 local ThemeColor = LoadModule('Theme.Colors.lua')
