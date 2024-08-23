@@ -112,6 +112,45 @@ aft[#aft + 1] = plrs
 ---[[
 for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 	--local plrpop = GAMESTATE:GetPlayerState(v):GetPlayerOptions('ModsLevel_Preferred')
+	local notefield = Def.NoteField {
+		Name = 'NoteField',
+		Player = v,
+		FieldID = i,
+		AutoPlay = true,
+		NoteSkin = GAMESTATE:GetPlayerState(v):GetPlayerOptions('ModsLevel_Preferred'):NoteSkin(),
+		DrawDistanceAfterTargetsPixels = nf.dda,
+		DrawDistanceBeforeTargetsPixels = nf.ddb,
+		YReverseOffsetPixels = nf.yrevoff,
+		SetupMessageCommand = function(self)
+			self:y(nf.y)
+			self:GetPlayerOptions('ModsLevel_Current')
+				:FromString(GAMESTATE:GetPlayerState(v):GetPlayerOptionsString('ModsLevel_Preferred'))
+			self:luaeffect('UpdateTransform')
+		end,
+		UpdateTransformCommand = function(self)
+			local poptions = GAMESTATE:GetPlayerState(v):GetPlayerOptions('ModsLevel_Song')
+			local mini = scale(poptions:Mini(), 0, 1, 1, 0.5)
+			local tilt = 1 - (0.1 * math.abs(poptions:Tilt()))
+			local rotx = -30 * poptions:Tilt()
+			self
+				:zoom(mini * tilt)
+				:rotationx(rotx)
+		end,
+		MusicLoopEndMessageCommand = function(self)
+			self:AutoPlay(false)
+			self:SetNoteDataFromLua(nf.chart[i])
+			self:GetPlayerOptions('ModsLevel_Current')
+				:FromString(GAMESTATE:GetPlayerState(v):GetPlayerOptionsString('ModsLevel_Preferred'))
+			self:AutoPlay(true)
+		end,
+		LuaNoteSkinsChangedMessageCommand = function(self, param)
+			if param.pn ~= v then return end
+			self:GetPlayerOptions('ModsLevel_Current'):NoteSkinCol(nil, param.choicename)
+		end,
+	}
+
+	
+	local oldstyle = GAMESTATE:GetCurrentStyle()
 	plrs[#plrs + 1] = Def.ActorFrame {
 		Name = 'Player'..ToEnumShortString(v),
 		FOV = 45,
@@ -131,7 +170,7 @@ for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 			end
 			function self:vanishpointy(n)
 				local offset = SCREEN_CENTER_Y
-				return vanishy(self, offset + n)
+				return vanishy(self, n)
 			end
 			function self:vanishpoint(x, y)
 				return self:vanishpointx(x):vanishpointy(y)
@@ -164,6 +203,39 @@ for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 			end
 			self:luaeffect('UpdateMods')
 		end,
+		['CurrentSteps'..ToEnumShortString(v)..'ChangedMessageCommand'] = function(self)
+			self:queuecommand('SetPreviewChart')
+		end,
+		SetPreviewChartCommand = function(self)
+			if not song then return end
+			local chartnum, chart
+			for n, c in ipairs(song:GetAllSteps()) do
+				if c == GAMESTATE:GetCurrentSteps(v) then
+					chartnum = n
+					chart = c
+				end
+			end
+			if not chart then return end
+			local ctype = chart:GetStepsType():lower()
+			if GAMESTATE:GetNumPlayersEnabled() > 1 then
+				GAMESTATE:SetCurrentStyle('versus')
+			else
+				GAMESTATE:SetCurrentStyle(ctype:sub(1 - ctype:reverse():find('_'), -1))
+			end
+			local nd = song:GetNoteData(chartnum)
+			if not nd then return end
+			-- fuck man just idk
+			local newstyle = GAMESTATE:GetCurrentStyle()
+			if oldstyle:ColumnsPerPlayer() < newstyle:ColumnsPerPlayer() then
+				self:RemoveChild("NoteField")
+				self:AddChild(function() return notefield end)
+				self:queuemessage("Setup")
+			else
+				self:SetNoteDataFromLua(nd)
+			end
+			oldstyle = newstyle
+			nf.chart[i] = nd
+		end,
 		SpeedChoiceChangedMessageCommand = function(self, params)
 			local poptions = self:GetChild('NoteField'):GetPlayerOptions('ModsLevel_Current')
 			if params.pn ~= v then return end
@@ -180,77 +252,12 @@ for i, v in ipairs(GAMESTATE:GetEnabledPlayers()) do
 			local scr = SCREENMAN:GetTopScreen()
 			local idx = scr:GetCurrentRowIndex(v)
 			local opt = scr:GetOptionRow(idx)
-			print(opt:GetChoiceInRowWithFocus(v))
 			self:GetChild('NoteField'):GetPlayerOptions('ModsLevel_Current')
 				:FromString(GAMESTATE:GetPlayerState(v):GetPlayerOptionsString('ModsLevel_Preferred'))
 		end,
-		Def.NoteField {
-			Name = 'NoteField',
-			Player = v,
-			FieldID = i,
-			AutoPlay = true,
-			NoteSkin = GAMESTATE:GetPlayerState(v):GetPlayerOptions('ModsLevel_Preferred'):NoteSkin(),
-			DrawDistanceAfterTargetsPixels = nf.dda,
-			DrawDistanceBeforeTargetsPixels = nf.ddb,
-			YReverseOffsetPixels = nf.yrevoff,
-			SetupMessageCommand = function(self)
-				self:y(nf.y)
-				self:GetPlayerOptions('ModsLevel_Current')
-					:FromString(GAMESTATE:GetPlayerState(v):GetPlayerOptionsString('ModsLevel_Preferred'))
-				self:luaeffect('UpdateTransform')
-			end,
-			UpdateTransformCommand = function(self)
-				local poptions = GAMESTATE:GetPlayerState(v):GetPlayerOptions('ModsLevel_Song')
-				local mini = scale(poptions:Mini(), 0, 1, 1, 0.5)
-				local tilt = 1 - (0.1 * math.abs(poptions:Tilt()))
-				local rotx = -30 * poptions:Tilt()
-				self
-					:zoom(mini * tilt)
-					:rotationx(rotx)
-			end,
-			['CurrentSteps'..ToEnumShortString(v)..'ChangedMessageCommand'] = function(self)
-				self:queuecommand('SetPreviewChart')
-			end,
-			SetPreviewChartCommand = function(self)
-				self:AutoPlay(false)
-				self:SetNoteDataFromLua({})
-				if not song then return end
-				local chartnum, chart
-				for n, c in ipairs(song:GetAllSteps()) do
-					if c == GAMESTATE:GetCurrentSteps(v) then
-						chartnum = n
-						chart = c
-					end
-				end
-				if not chart then return end
-				local ctype = chart:GetStepsType():lower()
-				if GAMESTATE:GetNumPlayersEnabled() > 1 then
-					GAMESTATE:SetCurrentStyle('versus')
-				else
-					GAMESTATE:SetCurrentStyle(ctype:sub(1 - ctype:reverse():find('_'), -1))
-				end
-				local nd = song:GetNoteData(chartnum)
-				if not nd then return end
-				self:SetNoteDataFromLua(nd)
-				self:AutoPlay(true)
-				--self:ChangeReload(chart)
-				nf.chart[i] = nd
-			end,
-			MusicLoopEndMessageCommand = function(self)
-				self:AutoPlay(false)
-				self:SetNoteDataFromLua(nf.chart[i])
-				self:GetPlayerOptions('ModsLevel_Current')
-					:FromString(GAMESTATE:GetPlayerState(v):GetPlayerOptionsString('ModsLevel_Preferred'))
-				self:AutoPlay(true)
-				--self:ChangeReload(chart)
-			end,
-			LuaNoteSkinsChangedMessageCommand = function(self, param)
-				if param.pn ~= v then return end
-				self:GetPlayerOptions('ModsLevel_Current'):NoteSkinCol(nil, param.choicename)
-			end,
-		},
 		Def.Sprite { Name = 'Judgment', InitCommand = function(self) self:visible(false) end },
 		Def.BitmapText { Name = 'Combo', Font = 'Common Normal', InitCommand = function(self) self:visible(false) end },
+		notefield,
 	}
 end
 --]]
