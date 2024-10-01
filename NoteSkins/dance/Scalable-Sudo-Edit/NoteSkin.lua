@@ -102,14 +102,14 @@ function USWN.Load()
 	end
 
 	--Returning first part of the code, The redirects, Second part is for commands
-	local t = loadfile(NOTESKIN:GetPath(Button, Element))()
+	local t = LoadActor(NOTESKIN:GetPath(Button, Element))
 
 	--Set blank redirects
 	if USWN.Blank[sElement] then
 		t = Def.Actor {}
 		--Check if element is sprite only
 		if Var "SpriteOnly" then
-			t = loadfile(NOTESKIN:GetPath("", "_blank"))()
+			t = LoadActor(NOTESKIN:GetPath("", "_blank"))
 		end
 	end
 
