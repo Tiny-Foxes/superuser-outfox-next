@@ -306,13 +306,13 @@ local t = Def.ActorFrame {
 			children = LoadPlayerStuff(PLAYER_2),
 		},
 		-- sounds
-		loadfile(THEME:GetPathS("Common", "start"))() .. {
+		LoadActor(THEME:GetPathS("Common", "start")) .. {
 			StartButtonMessageCommand = function(self) self:play() end,
 		},
-		loadfile(THEME:GetPathS("Common", "cancel"))() .. {
+		LoadActor(THEME:GetPathS("Common", "cancel")) .. {
 			BackButtonMessageCommand = function(self) self:play() end,
 		},
-		loadfile(THEME:GetPathS("Common", "value"))() .. {
+		LoadActor(THEME:GetPathS("Common", "value")) .. {
 			DirectionButtonMessageCommand = function(self) self:play() end,
 		},
 	},
