@@ -1,1 +1,1 @@
-return LoadActor(THEME:GetPathG('OFGameplay', 'PlayerBase'))(PLAYER_1)
+return loadfile(THEME:GetPathG('OFGameplay', 'PlayerBase'))()(PLAYER_1)

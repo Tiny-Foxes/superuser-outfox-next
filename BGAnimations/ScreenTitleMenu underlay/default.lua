@@ -7,7 +7,7 @@ local id = ProductID()
 
 -- TODO: Check for more SM instances to prepare for compatibility requests. ~Sudo
 if not string.find(string.lower(id), 'outfox') then
-	return LoadActor(THEME:GetPathB('ScreenTitleMenu', 'underlay/SM51.lua'))
+	return loadfile(THEME:GetPathB('ScreenTitleMenu', 'underlay/SM51.lua'))()
 else
-	return LoadActor(THEME:GetPathB('ScreenTitleMenu', 'underlay/OutFox.lua'))
+	return loadfile(THEME:GetPathB('ScreenTitleMenu', 'underlay/OutFox.lua'))()
 end

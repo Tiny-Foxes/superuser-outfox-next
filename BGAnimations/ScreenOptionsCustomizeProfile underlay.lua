@@ -380,7 +380,7 @@ for i, item in ipairs(menu_items) do
 			OffCommand = function(s) s:linear(0.2):diffusealpha(0) end,
 		},
 
-		LoadActor(THEME:GetPathG('_StepsDisplayListRow', 'Cursor')) .. {
+		loadfile(THEME:GetPathG('_StepsDisplayListRow', 'Cursor'))() .. {
 			InitCommand = function(s)
 				s:x(40):diffuse(PlayerColor(master)):diffusealpha(0)
 			end,

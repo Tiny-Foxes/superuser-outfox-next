@@ -840,5 +840,5 @@ return Def.ActorFrame {
 			}
 		},
 	},
-	LoadActor(THEME:GetPathG('ScreenSelectMusic', 'DifficultyList')),
+	loadfile(THEME:GetPathG('ScreenSelectMusic', 'DifficultyList'))(),
 }

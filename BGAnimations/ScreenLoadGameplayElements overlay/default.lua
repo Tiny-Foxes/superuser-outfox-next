@@ -7,7 +7,7 @@ local tips = {
 }
 
 return Def.ActorFrame {
-	LoadActor(THEME:GetPathB('ScreenPlatformer', 'underlay')),
+	loadfile(THEME:GetPathB('ScreenPlatformer', 'underlay'))(),
 	OnCommand = function(self)
 		for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
 			SCREENMAN:set_input_redirected(pn, true)

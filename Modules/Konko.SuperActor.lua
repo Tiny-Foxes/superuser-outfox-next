@@ -61,7 +61,7 @@ local function new(obj)
 	return t
 end
 local function FromFile(path)
-	local obj = LoadActor(path)
+	local obj = assert(loadfile(path))()
 	local t = {}
 	for k, v in pairs(obj) do
 		t[k] = v

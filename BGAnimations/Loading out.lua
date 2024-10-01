@@ -1,5 +1,5 @@
 return Def.ActorFrame {
-	LoadActor(THEME:GetPathB('Fade', 'out')),
+	loadfile(THEME:GetPathB('Fade', 'out'))(),
 	Def.BitmapText {
 		Font = '_xide/40px',
 		Text = 'Loading...',

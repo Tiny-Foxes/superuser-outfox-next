@@ -24,7 +24,7 @@ Judges[#Judges+1] = Def.ActorFrame {
 
 for _, pn in ipairs(GAMESTATE:GetEnabledPlayers()) do
 	local pos = { [PLAYER_1] = 0, [PLAYER_2] = 300 }
-	Judges[#Judges+1] = LoadActor(THEME:GetPathG('_StepsDisplayListRow', 'Cursor')) .. {
+	Judges[#Judges+1] = loadfile(THEME:GetPathG('_StepsDisplayListRow', 'Cursor'))() .. {
 		Condition=GAMESTATE:IsHumanPlayer(pn) and GAMESTATE:GetPlayMode(),
 		OnCommand=function(s)
 			local margin = SCREEN_WIDTH > 1280 and 500 or 526

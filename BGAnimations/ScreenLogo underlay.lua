@@ -282,7 +282,7 @@ return Def.ActorFrame {
 		InitCommand = function(self)
 			aft(self)
 		end,
-		LoadActor(THEME:GetPathB('ScreenWithMenuElements', 'background')),
+		loadfile(THEME:GetPathB('ScreenWithMenuElements', 'background'))(),
 		Def.Quad {
 			InitCommand = function(self)
 				self

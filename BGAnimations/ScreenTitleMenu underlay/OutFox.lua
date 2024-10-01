@@ -53,7 +53,7 @@ end
 -- Title ActorFrameTexture
 local titleAFT = SuperActor.new('ActorFrameTexture')
 -- Title AFT Background
-local bg = LoadActor(THEME:GetPathB('ScreenTitleMenu', 'background'))
+local bg = loadfile(THEME:GetPathB('ScreenTitleMenu', 'background'))()
 -- Title AFT BG Dimmer
 local bgDim = SuperActor.new('Quad')
 -- Title AFT Sprite
