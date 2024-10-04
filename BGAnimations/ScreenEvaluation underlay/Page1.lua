@@ -47,6 +47,7 @@ local function GetPlrDiff(plr)
 	local diff = GAMESTATE:GetCurrentSteps(plr):GetDifficulty()
 	local cdiff = THEME:GetString("CustomDifficulty",ToEnumShortString(diff))
 	local meter = GAMESTATE:GetCurrentSteps(plr):GetMeter()
+	meter = math.floor(meter * 10 + 0.5) * 0.1
 	return cdiff..'  '..meter
 end
 
