@@ -12,7 +12,7 @@ local SuperActor = LoadModule('Konko.SuperActor.lua')
 -- Load GrooveStats Handler module
 local gs = LoadModule('GrooveStats.Handler.lua')
 
-if gs.Enabled() then
+if gs and gs.Enabled() then
 	local pingres = gs.ping()
 	if not pingres or pingres.status == 'timeout' then
 		SCREENMAN:SystemMessage('GrooveStats connection timed out.')
@@ -28,7 +28,6 @@ end
 GAMESTATE:UpdateDiscordGameMode(GAMESTATE:GetCurrentGame():GetName())
 
 -- Define local variables and functions
-local scale = SH / 480
 local splash = false
 
 local ThemeColor = LoadModule('Theme.Colors.lua')
@@ -462,7 +461,7 @@ do uiTagline
 		end
 		-- I'm working on translating these titles, but getting some translators
 		-- is pretty much essential at this point.
-		-- Taglines default to English if there aren't any for that language.
+		-- Taglines default to English if there aren't any for the chosen language.
 		local langtags = taglines[THEME:GetCurLanguage()]
 		if not langtags then langtags = taglines.en end
 		local rng = math.ceil(OFMath.randomfloat() * #langtags)
