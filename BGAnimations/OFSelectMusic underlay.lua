@@ -115,7 +115,7 @@ return Def.ActorFrame {
 									self
 										:SetSize(32, 32)
 										:skewx(-0.5)
-										:diffuse(ThemeColor[ToEnumShortString(v:GetDifficulty())])
+										:diffuse(ThemeColor[ToEnumShortString(v:GetDifficulty())] or ThemeColor.Gray)
 								end,
 							},
 							Def.BitmapText {
