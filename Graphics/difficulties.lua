@@ -7,7 +7,7 @@ local diffs_af = Def.ActorFrame {
 			for _, v in ipairs(GAMESTATE:GetCurrentSong():GetAllSteps()) do
 				local d = v:GetDifficulty()
 				local m = v:GetMeter()
-				if diffs[d] ~= m then diffs[d] = v:GetMeter() end
+				diffs[d] = m
 			end
 		end
 	end,
