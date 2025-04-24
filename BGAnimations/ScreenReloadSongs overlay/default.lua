@@ -6,13 +6,12 @@ end
 local Reload = {
 	"Tetrahol",
     --"TetraholRemastered",
-    --"IchigoGameTemplate",
 }
 
 return Def.ActorFrame{
-    loadfile( THEME:GetPathB("ScreenReloadSongs", "overlay/"..Reload[math.random(1,#Reload)]) )(),
+    assert(loadfile( THEME:GetPathB("ScreenReloadSongs", "overlay/"..Reload[math.random(1,#Reload)]) ))(),
     Def.Sprite {
-        Texture=THEME:GetPathG("", "karen"),
+        Texture=THEME:GetPathG('ScreenLoadGameplayElements', 'spinner'),
         OnCommand=function(self)
             self
                 :SetSize(64 * self:GetTexture():GetSourceWidth() / self:GetTexture():GetSourceHeight(), 64)
@@ -21,7 +20,7 @@ return Def.ActorFrame{
         end
     },
     Def.BitmapText{
-        Name="CurSong",    
+        Name="CurSong",
         Font="Common Normal",
         Text="StartingUp",
         OnCommand=function(self)
@@ -31,7 +30,7 @@ return Def.ActorFrame{
         end
     },
     Def.BitmapText{
-        Name="CurProgress",    
+        Name="CurProgress",
         Font="Common Normal",
         Text="0%",
         OnCommand=function(self)
