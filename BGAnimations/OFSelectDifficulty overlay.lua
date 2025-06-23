@@ -68,11 +68,37 @@ end
 
 
 local af = SuperActor.new('ActorFrame')
+
 local diffPreview = SuperActor.new('ActorFrame')
+local songOptText = SuperActor.new('BitmapText')
+
 diffPreview:SetCommand('On', function(self)
 	self:AddChild(loadfile(THEME:GetPathG('Players', 'preview')))
 end)
-af:AddChild(diffPreview, 'DiffPreview')
+
+do songOptText
+	:SetCommand('Init', function(self)
+		self
+			:y(-SCREEN_HEIGHT)
+			:settext('Press &START; for Options')
+			:visible(false)
+		self.needed = false
+	end)
+	:SetCommand('Show', function(self)
+		self:visible(true)
+		self.needed = true
+	end)
+	:SetCommand('Disregard', function(self)
+		self.needed = false
+		SuperActor.GetTree().DifficultyFrame:queuecommand('Off')
+		SCREENMAN:GetTopScreen():queuemessage('EnterGameplay')
+	end)
+end
+
+do af
+	:AddChild(diffPreview, 'DiffPreview')
+	:AddChild(songOptText, 'OptionsText')
+end
 
 for k in pairs(plrs) do
 
@@ -621,7 +647,12 @@ do af
 		if not PROFILEMAN:GetProfile(PLAYER_1) and not PROFILEMAN:GetProfile(PLAYER_2) then
 			PROFILEMAN:SaveMachineProfile()
 		end
-		SCREENMAN:GetTopScreen():lockinput(0.25)
+
+		local optText = SuperActor.GetTree().DifficultyFrame.OptionsText
+
+		if not optText:GetVisible() then
+			SCREENMAN:GetTopScreen():lockinput(0.25)
+		end
 		self
 			:finishtweening()
 			:easeinexpo(0.25)
@@ -635,7 +666,8 @@ do af
 		end
 	end)
 	:SetCommand('DiffCancel', function(self)
-		if focus == 'Difficulty' then
+		local optText = SuperActor.GetTree().DifficultyFrame.OptionsText
+		if focus == 'Difficulty' and not optText.needed then
 			SCREENMAN:GetTopScreen():Cancel()
 		end
 	end)
@@ -682,20 +714,31 @@ do af
 		end
 	end)
 	:SetCommand('Start', function(self)
-		if focus ~= 'Difficulty' then return end
-		if (plrs[PLAYER_1] and plrs[PLAYER_2]) then
-			if not PlayerReady[self.pn] then
-				PlayerReady[self.pn] = true
-				self:queuecommand('Ready'..ToEnumShortString(self.pn))
-			elseif PlayerReady[PLAYER_1] and PlayerReady[PLAYER_2] then
-				SOUND:PlayOnce(THEME:GetPathS('Common', 'Start'), true)
-				self:stoptweening():playcommand('Off')
-				SCREENMAN:GetTopScreen():queuemessage('EnterGameplay')
-			end
-		else
+		local optText = SuperActor.GetTree().DifficultyFrame.OptionsText
+		if optText:GetVisible() then
 			SOUND:PlayOnce(THEME:GetPathS('Common', 'Start'), true)
-			self:stoptweening():playcommand('Off')
-			SCREENMAN:GetTopScreen():queuemessage('EnterGameplay')
+			optText:settext('Entering Options...')
+			optText.needed = false
+			self:stoptweening():queuecommand('Off')
+			SCREENMAN:GetTopScreen():queuemessage('EnterOptions')
+		else
+			if focus ~= 'Difficulty' then return end
+			if (plrs[PLAYER_1] and plrs[PLAYER_2]) then
+				if not PlayerReady[self.pn] then
+					PlayerReady[self.pn] = true
+					self:queuecommand('Ready'..ToEnumShortString(self.pn))
+				elseif PlayerReady[PLAYER_1] and PlayerReady[PLAYER_2] then
+					SOUND:PlayOnce(THEME:GetPathS('Common', 'Start'), true)
+					optText:playcommand('Show')
+					self:easeinoutexpo(0.5):addy(SCREEN_HEIGHT)
+					optText:sleep(2):queuecommand('Disregard')
+				end
+			else
+				SOUND:PlayOnce(THEME:GetPathS('Common', 'Start'), true)
+				optText:playcommand('Show')
+				self:easeinoutexpo(0.5):addy(SCREEN_HEIGHT)
+				optText:sleep(2):queuecommand('Disregard')
+			end
 		end
 	end)
 	:AddToTree('DifficultyFrame')

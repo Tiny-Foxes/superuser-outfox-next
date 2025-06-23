@@ -1126,21 +1126,24 @@ do varControl
 	end)
 	:SetMessage('EnterOptions', function(self)
 		wheel.NextScreen = 'ScreenPlayerOptions'
-		self:sleep(0.25):queuecommand('BeginTransition')
+		self:stoptweening():sleep(0.25):queuecommand('BeginTransition')
 	end)
 	:SetMessage('EnterGameplay', function(self)
-		SOUND:DimMusic(0, 3)
 		wheel.NextScreen = Branch.GameplayScreen()
-		self:sleep(0.25):queuecommand('BeginTransition')
+		SOUND:DimMusic(0, 3)
+		self:stoptweening():sleep(0.25):queuecommand('BeginTransition')
 	end)
 	:SetCommand('BeginTransition', function(self)
+		local screenName = SCREENMAN:GetTopScreen():GetName()
+		if screenName == 'OFSelectDifficulty' then
+			SCREENMAN:GetTopScreen():Cancel()
+		end
 		for plr in ivalues(PlayerNumber) do
 			SCREENMAN:set_input_redirected(plr, false)
 		end
 		SCREENMAN:GetTopScreen()
 			:SetNextScreenName(wheel.NextScreen)
 			:StartTransitioningScreen('SM_GoToNextScreen')
-			--:PostScreenMessage('SM_GoToNextScreen', 1)
 	end)
 	:AddToTree()
 end

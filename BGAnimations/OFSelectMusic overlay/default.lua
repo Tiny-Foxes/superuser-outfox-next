@@ -1,5 +1,5 @@
 if GAMESTATE:IsCourseMode() then TF_WHEEL.PreferredSort = 'Group' end
-local wheel = 'superuser'
+local wheel = TF_WHEEL.PreferredWheel or 'superuser'
 return Def.ActorFrame {
 	OnCommand = function(self)
 		self:queuecommand('RandomSubText')
