@@ -19,6 +19,9 @@ Evaluation
 **Q. I'm new to OutFox. How do I install the theme?**  
 *A. Place this theme in the game's install directory under `/Appearances/Themes`, then start the game, go to Options, Appearance Settings, and select Superuser from the list of themes. The game should automatically switch to the theme. If for some reason it does not, or you encounter issues with this, you can restart your game and it should fix itself. If you're still having problems, you can easily find me on the Project OutFox Discord server.*
 
+**Q. I want to use this theme for a party/event. What should I do?**
+*A. As long as you keep the theme's credits intact, feel free to use this theme for whatever your heart desires.*
+
 **Q. I tried this theme on SM5.1, but it doesn't work. How do I fix this?**  
 *A. At the moment, this theme is only supported on OutFox, as it use OutFox-specific Lua. If you want support for a specific version of StepMania, please submit a feature request saying so!*
 
