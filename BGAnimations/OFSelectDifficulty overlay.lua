@@ -263,7 +263,7 @@ for k in pairs(plrs) do
 	for i, v in ipairs {
 		'Author', 'Taps', 'Holds', 'Rolls',
 		'Style', 'Jumps', 'Hands', 'Lifts',
-		'Info',			  'Fakes', 'Mines',
+		'Info',           'Fakes', 'Mines',
 	} do
 		local text = SuperActor.new('BitmapText')
 		do text
@@ -298,8 +298,8 @@ for k in pairs(plrs) do
 						datum = THEME:GetString('LongStepsType', ToEnumShortString(chart:GetStepsType()))
 					elseif v == 'Info' then
 						if GAMESTATE:IsCourseMode() then
-							datum = {GAMESTATE:GetCurrentCourse():GetDescription(), '('..#chart:GetTrailEntries()..' songs)'}
-							datum = table.concat(datum, ' ')
+							local d = {GAMESTATE:GetCurrentCourse():GetDescription(), '('..#chart:GetTrailEntries()..' songs)'}
+							datum = table.concat(d, ' ')
 						else
 							datum = chart:GetDescription()
 						end
@@ -399,14 +399,14 @@ for k in pairs(plrs) do
 	af:AddChild(diffAF, 'Difficulty'..PN)
 end
 
-local gameprefs = IniFile.ReadFile('/Save/OutFoxPrefs.ini')
-local optprefs = LoadModule('Options.Prefs.lua')
-for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
+--local gameprefs = IniFile.ReadFile('/Save/OutFoxPrefs.ini')
+--local optprefs = LoadModule('Options.Prefs.lua')
+for i, pn in ipairs(GAMESTATE:GetEnabledPlayers()) do
 	local x = PositionPerPlayer(pn, -SCX - 180, SCX + 180)
 	local addx = PositionPerPlayer(pn, 360, -360)
 	local fadeside = PositionPerPlayer(pn, 'faderight', 'fadeleft')
 
-	local profprefs = IniFile.ReadFile(CheckIfUserOrMachineProfile(0)..'/OutFoxPrefs.ini')
+	local profprefs = IniFile.ReadFile(CheckIfUserOrMachineProfile(i - 1)..'/OutFoxPrefs.ini')
 
 	local po = GAMESTATE:GetPlayerState(pn):GetPlayerOptions('ModsLevel_Preferred')
 
