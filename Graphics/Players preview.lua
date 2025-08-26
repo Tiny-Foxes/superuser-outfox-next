@@ -70,7 +70,7 @@ local aft = Def.ActorFrameTexture {
 		self
 			:SetSize(SCREEN_WIDTH, SCREEN_HEIGHT)
 			:EnableAlphaBuffer(true)
-			:EnableDepthBuffer(false)
+			:EnableDepthBuffer(true)
 			:EnableFloat(false)
 			:EnablePreserveTexture(false)
 			:Create()
