@@ -1,7 +1,0 @@
-{
-	"Lua.runtime.version": "Lua 5.4",
-	"Lua.diagnostics.disable": [
-		"undefined-global"
-	],
-	"lua.targetVersion": "5.3"
-}
